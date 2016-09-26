@@ -37,7 +37,9 @@ Here's a walkthrough of implemented user stories:
 
 ## Notes
 
-Had a hard time creating proper animated GIF screen recording in Linux
+Had a hard time creating proper animated GIF screen recording in Linux.
+
+Manually created one but get content length exceeded when I try to embed as an image.
 
 
 ## License
