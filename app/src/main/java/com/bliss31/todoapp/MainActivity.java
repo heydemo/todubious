@@ -8,12 +8,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
+
+import com.bliss31.todoapp.models.TodoModel;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -71,26 +78,29 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void readItems() {
-        File filesDir = getFilesDir();
-        File file = new File(filesDir, "todo.txt");
-        try {
-            todoItems = new ArrayList<String>(FileUtils.readLines(file));
-        } catch(IOException e) {
+        List<TodoModel> todoModelList = SQLite.select().
+                from(TodoModel.class).queryList();
 
+        for (TodoModel todo : todoModelList) {
+            todoItems.add(todo.getTodoText());
         }
     }
 
     private void writeItems() {
-        File filesDir = getFilesDir();
-        File file = new File(filesDir, "todo.txt");
-        try {
-            FileUtils.writeLines(file, todoItems);
-        } catch(IOException e) {
-
+        TodoModel.deleteAllTodos();
+        for (String todoText : todoItems) {
+            TodoModel todo = new TodoModel();
+            todo.setTodoText(todoText);
+            todo.save();
         }
     }
 
     public void onAddItem(View view) {
+        String todo_text = etEditText.getText().toString();
+        TodoModel todo = new TodoModel();
+        todo.setTodoText(todo_text);
+        todo.save();
+        Toast.makeText(this, "Created TODO", Toast.LENGTH_SHORT).show();
         aToDoAdapter.add(etEditText.getText().toString());
         etEditText.setText("");
         writeItems();
