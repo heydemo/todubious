@@ -1,4 +1,4 @@
-# Pre-work - *Name of App Here*
+# Pre-work - *ToDubious*
 
 ToDubious is an android app that allows building a todo list and basic todo items management functionality including adding new items, editing and deleting an existing item.
 
@@ -31,17 +31,20 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-![Video Walkthrough](http://imgur.com/a/jYygJ)
+[Video Walkthrough](http://imgur.com/hD5fyok/)
 
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Had a hard time creating proper animated GIF screen recording in Linux.
+
+Manually created one but get content length exceeded when I try to embed as an image.
+
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright 2016 John De Mott
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
