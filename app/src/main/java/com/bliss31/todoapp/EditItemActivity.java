@@ -14,8 +14,10 @@ public class EditItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
+        String itemText = getIntent().getStringExtra("item_text");
         editText = (EditText) findViewById(R.id.etUpdateItem);
-        editText.setText(getIntent().getStringExtra("item_text"));
+        editText.setText(itemText);
+        editText.setSelection(itemText.length());
         item_position = getIntent().getIntExtra("item_position", 0);
     }
     public void onEditSubmit(View view) {
