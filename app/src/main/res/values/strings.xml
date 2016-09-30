@@ -2,6 +2,8 @@
     <string name="app_name">Todubious</string>
     <string name="Add">Add</string>
     <string name="add_item">Add a new item...</string>
-    <string name="edit_item_header" >Edit Item Below:</string>
+    <string name="edit_item_header">Edit Item Below:</string>
     <string name="Save">Save</string>
+    <string name="add_due_date">Add a due date</string>
+    <string name="due">Due: </string>
 </resources>

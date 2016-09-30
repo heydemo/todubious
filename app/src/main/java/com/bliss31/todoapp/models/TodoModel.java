@@ -6,6 +6,8 @@ import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.sql.Date;
+
 /**
  * Created by jdemott on 9/28/16.
  */
@@ -19,11 +21,21 @@ public class TodoModel extends BaseModel {
     @Column
     String todoText;
 
+    @Column
+    long dueDateInMillis;
+
+
     public void setTodoText(String todoText) {
         this.todoText = todoText;
     }
     public String getTodoText() {
         return this.todoText;
+    }
+    public void setDueDateInMillis(long dueDateInMillis) {
+        this.dueDateInMillis = dueDateInMillis;
+    }
+    public long getDueDateInMillis() {
+        return this.dueDateInMillis;
     }
     public static void deleteAllTodos() {
         SQLite.delete().from(TodoModel.class).execute();

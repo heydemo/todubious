@@ -4,12 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 
 import com.bliss31.todoapp.adapters.TodosAdapter;
@@ -50,8 +47,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent editIntent = new Intent(MainActivity.this, EditItemActivity.class);
-                editIntent.putExtra("itemText", todoItems.get(position).getTodoText());
+                TodoModel todo = todoItems.get(position);
+                editIntent.putExtra("itemText", todo.getTodoText());
                 editIntent.putExtra("itemPosition", position);
+                editIntent.putExtra("dueDateInMillis", todo.getDueDateInMillis());
                 startActivityForResult(editIntent, EDIT_ITEM_REQUEST_CODE);
             }
         });
@@ -62,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
             String itemText = result.getStringExtra("itemText");
             int itemPosition = result.getIntExtra("itemPosition", 0);
             TodoModel todo = new TodoModel();
+            long dueDateInMillis = result.getLongExtra("dueDateInMillis", 0);
             todo.setTodoText(itemText);
+            todo.setDueDateInMillis(dueDateInMillis);
             todoItems.set(itemPosition, todo);
             aToDoAdapter.notifyDataSetChanged();
             writeItems();
