@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -11,22 +12,17 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
+import com.bliss31.todoapp.adapters.TodosAdapter;
 import com.bliss31.todoapp.models.TodoModel;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<String> todoItems;
-    ArrayAdapter<String> aToDoAdapter;
+    ArrayList<TodoModel> todoItems;
+    TodosAdapter aToDoAdapter;
     ListView lvItems;
     EditText etEditText;
     private final int EDIT_ITEM_REQUEST_CODE = 20;
@@ -54,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent edit_intent = new Intent(MainActivity.this, EditItemActivity.class);
-                edit_intent.putExtra("item_text", todoItems.get(position));
+                edit_intent.putExtra("item_text", todoItems.get(position).getTodoText());
                 edit_intent.putExtra("item_position", position);
                 startActivityForResult(edit_intent, EDIT_ITEM_REQUEST_CODE);
             }
@@ -65,16 +61,18 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == EDIT_ITEM_REQUEST_CODE) {
             String item_text = result.getStringExtra("item_text");
             int item_position = result.getIntExtra("item_position", 0);
-            todoItems.set(item_position, item_text);
+            TodoModel todo = new TodoModel();
+            todo.setTodoText(item_text);
+            todoItems.set(item_position, todo);
             aToDoAdapter.notifyDataSetChanged();
             writeItems();
         }
 
    }
     public void populateArrayItems() {
-        todoItems = new ArrayList<String>();
+        todoItems = new ArrayList<TodoModel>();
         readItems();
-        aToDoAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, todoItems);
+        aToDoAdapter = new TodosAdapter(this, todoItems);
 
     }
     private void readItems() {
@@ -82,15 +80,13 @@ public class MainActivity extends AppCompatActivity {
                 from(TodoModel.class).queryList();
 
         for (TodoModel todo : todoModelList) {
-            todoItems.add(todo.getTodoText());
+            todoItems.add(todo);
         }
     }
 
     private void writeItems() {
         TodoModel.deleteAllTodos();
-        for (String todoText : todoItems) {
-            TodoModel todo = new TodoModel();
-            todo.setTodoText(todoText);
+        for (TodoModel todo: todoItems) {
             todo.save();
         }
     }
@@ -100,8 +96,7 @@ public class MainActivity extends AppCompatActivity {
         TodoModel todo = new TodoModel();
         todo.setTodoText(todo_text);
         todo.save();
-        Toast.makeText(this, "Created TODO", Toast.LENGTH_SHORT).show();
-        aToDoAdapter.add(etEditText.getText().toString());
+        aToDoAdapter.add(todo);
         etEditText.setText("");
         writeItems();
     }
