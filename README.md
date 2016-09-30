@@ -4,7 +4,7 @@ ToDubious is an android app that allows building a todo list and basic todo item
 
 Submitted by: John De Mott
 
-Time spent: 10 hours spent in total
+Time spent: 16 hours spent in total
 
 ## User Stories
 
