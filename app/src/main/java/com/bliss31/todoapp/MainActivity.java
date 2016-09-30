@@ -49,21 +49,21 @@ public class MainActivity extends AppCompatActivity {
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent edit_intent = new Intent(MainActivity.this, EditItemActivity.class);
-                edit_intent.putExtra("item_text", todoItems.get(position).getTodoText());
-                edit_intent.putExtra("item_position", position);
-                startActivityForResult(edit_intent, EDIT_ITEM_REQUEST_CODE);
+                Intent editIntent = new Intent(MainActivity.this, EditItemActivity.class);
+                editIntent.putExtra("itemText", todoItems.get(position).getTodoText());
+                editIntent.putExtra("itemPosition", position);
+                startActivityForResult(editIntent, EDIT_ITEM_REQUEST_CODE);
             }
         });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent result) {
         if (resultCode == RESULT_OK && requestCode == EDIT_ITEM_REQUEST_CODE) {
-            String item_text = result.getStringExtra("item_text");
-            int item_position = result.getIntExtra("item_position", 0);
+            String itemText = result.getStringExtra("itemText");
+            int itemPosition = result.getIntExtra("itemPosition", 0);
             TodoModel todo = new TodoModel();
-            todo.setTodoText(item_text);
-            todoItems.set(item_position, todo);
+            todo.setTodoText(itemText);
+            todoItems.set(itemPosition, todo);
             aToDoAdapter.notifyDataSetChanged();
             writeItems();
         }
@@ -92,9 +92,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onAddItem(View view) {
-        String todo_text = etEditText.getText().toString();
+        String todoText = etEditText.getText().toString();
         TodoModel todo = new TodoModel();
-        todo.setTodoText(todo_text);
+        todo.setTodoText(todoText);
         todo.save();
         aToDoAdapter.add(todo);
         etEditText.setText("");

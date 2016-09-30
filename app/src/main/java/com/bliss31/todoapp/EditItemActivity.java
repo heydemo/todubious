@@ -8,23 +8,23 @@ import android.widget.EditText;
 
 public class EditItemActivity extends AppCompatActivity {
     EditText editText;
-    int item_position;
+    int itemPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
-        String itemText = getIntent().getStringExtra("item_text");
+        String itemText = getIntent().getStringExtra("itemText");
         editText = (EditText) findViewById(R.id.etUpdateItem);
         editText.setText(itemText);
         editText.setSelection(itemText.length());
-        item_position = getIntent().getIntExtra("item_position", 0);
+        itemPosition = getIntent().getIntExtra("itemPosition", 0);
     }
     public void onEditSubmit(View view) {
         Intent result = new Intent();
-        String item_text = editText.getText().toString();
-        result.putExtra("item_text", item_text);
-        result.putExtra("item_position", item_position);
+        String itemText = editText.getText().toString();
+        result.putExtra("itemText", itemText);
+        result.putExtra("itemPosition", itemPosition);
         setResult(RESULT_OK, result);
         finish();
     }
