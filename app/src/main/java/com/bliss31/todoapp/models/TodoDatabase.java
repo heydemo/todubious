@@ -16,14 +16,21 @@ import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
 @Database(name = TodoDatabase.NAME, version = TodoDatabase.VERSION)
 public class TodoDatabase {
     public static final String NAME = "TodoDatabase";
-    public static final int VERSION = 4;
+    public static final int VERSION = 5;
 
     @Migration(version = 4, database = TodoDatabase.class)
     public static class Migration4 extends BaseMigration {
         @Override
         public void migrate(DatabaseWrapper databaseWrapper) {
-            Log.v("doooooo", "Running update");
             databaseWrapper.execSQL("ALTER TABLE TodoModel ADD COLUMN dueDateInMillis INTEGER NOT NULL DEFAULT 0");
+        }
+    }
+    @Migration(version = 5, database = TodoDatabase.class)
+    public static class Migration5 extends BaseMigration {
+        @Override
+        public void migrate(DatabaseWrapper databaseWrapper) {
+            Log.v("doooo", "Running SQL update");
+            databaseWrapper.execSQL("ALTER TABLE TodoModel ADD COLUMN priority INTEGER NOT NULL DEFAULT 0");
         }
     }
 }

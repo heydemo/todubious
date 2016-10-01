@@ -24,6 +24,9 @@ public class TodoModel extends BaseModel {
     @Column
     long dueDateInMillis;
 
+    @Column
+    int priority = 0;
+
 
     public void setTodoText(String todoText) {
         this.todoText = todoText;
@@ -36,6 +39,12 @@ public class TodoModel extends BaseModel {
     }
     public long getDueDateInMillis() {
         return this.dueDateInMillis;
+    }
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+    public int getPriority() {
+        return this.priority;
     }
     public static void deleteAllTodos() {
         SQLite.delete().from(TodoModel.class).execute();

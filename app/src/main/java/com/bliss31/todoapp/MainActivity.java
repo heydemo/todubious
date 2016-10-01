@@ -1,6 +1,7 @@
 package com.bliss31.todoapp;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.bliss31.todoapp.models.TodoModel;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.droidsonroids.gif.GifImageView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,9 +39,19 @@ public class MainActivity extends AppCompatActivity {
         lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                todoItems.remove(position);
-                aToDoAdapter.notifyDataSetChanged();
-                writeItems();
+                final GifImageView explosion = (GifImageView) view.findViewById(R.id.ivExplosion);
+                explosion.setImageResource(R.drawable.explosion);
+                final Handler handler = new Handler();
+                handler.postDelayed(new RunnableWithPosition(position) {
+                    @Override
+                    public void run() {
+                        todoItems.remove(this.position);
+                        aToDoAdapter.notifyDataSetChanged();
+                        explosion.setImageResource(0);
+                        writeItems();
+                    }
+                }, 600);
+
                 return true;
             }
         });
@@ -51,19 +64,25 @@ public class MainActivity extends AppCompatActivity {
                 editIntent.putExtra("itemText", todo.getTodoText());
                 editIntent.putExtra("itemPosition", position);
                 editIntent.putExtra("dueDateInMillis", todo.getDueDateInMillis());
+                editIntent.putExtra("priority", todo.getPriority());
                 startActivityForResult(editIntent, EDIT_ITEM_REQUEST_CODE);
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent result) {
         if (resultCode == RESULT_OK && requestCode == EDIT_ITEM_REQUEST_CODE) {
             String itemText = result.getStringExtra("itemText");
             int itemPosition = result.getIntExtra("itemPosition", 0);
-            TodoModel todo = new TodoModel();
             long dueDateInMillis = result.getLongExtra("dueDateInMillis", 0);
+            int priority = result.getIntExtra("priority", 0);
+
+            TodoModel todo = new TodoModel();
             todo.setTodoText(itemText);
             todo.setDueDateInMillis(dueDateInMillis);
+            todo.setPriority(priority);
+
             todoItems.set(itemPosition, todo);
             aToDoAdapter.notifyDataSetChanged();
             writeItems();
@@ -100,5 +119,17 @@ public class MainActivity extends AppCompatActivity {
         aToDoAdapter.add(todo);
         etEditText.setText("");
         writeItems();
+    }
+}
+
+
+class RunnableWithPosition implements Runnable {
+    protected int position;
+    public RunnableWithPosition(int position) {
+        this.position = position;
+    }
+
+    @Override
+    public void run() {
     }
 }
