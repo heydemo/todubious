@@ -33,7 +33,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-[Video Walkthrough](http://iamthepowerbot.com/2016_09_30_02_36_12_02_38_10.mp4)
+[Video Walkthrough](http://iamthepowerbot.com/2016_09_30_19_26_42_19_27_53.mp4)
 
 
 
