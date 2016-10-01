@@ -1,4 +1,4 @@
-package com.bliss31.todoapp;
+package com.bliss31.todoapp.activities;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 
+import com.bliss31.todoapp.R;
 import com.bliss31.todoapp.adapters.TodosAdapter;
 import com.bliss31.todoapp.models.TodoModel;
 import com.raizlabs.android.dbflow.sql.language.SQLite;

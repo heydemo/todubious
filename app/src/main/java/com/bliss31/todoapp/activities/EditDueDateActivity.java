@@ -1,4 +1,4 @@
-package com.bliss31.todoapp;
+package com.bliss31.todoapp.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Toast;
+
+import com.bliss31.todoapp.R;
 
 import java.sql.Date;
 import java.util.Calendar;

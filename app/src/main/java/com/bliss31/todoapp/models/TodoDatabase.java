@@ -29,7 +29,6 @@ public class TodoDatabase {
     public static class Migration5 extends BaseMigration {
         @Override
         public void migrate(DatabaseWrapper databaseWrapper) {
-            Log.v("doooo", "Running SQL update");
             databaseWrapper.execSQL("ALTER TABLE TodoModel ADD COLUMN priority INTEGER NOT NULL DEFAULT 0");
         }
     }

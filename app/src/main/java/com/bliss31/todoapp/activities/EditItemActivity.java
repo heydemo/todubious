@@ -1,4 +1,4 @@
-package com.bliss31.todoapp;
+package com.bliss31.todoapp.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bliss31.todoapp.R;
 import com.bliss31.todoapp.util.TodoDate;
 
 public class EditItemActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
